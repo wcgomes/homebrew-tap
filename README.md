@@ -1,6 +1,6 @@
 # homebrew-tap
 
-Homebrew tap for [adevcontainer](https://github.com/wcgomes/dev-containerization).
+Homebrew tap for [adevcontainer](https://github.com/wcgomes/apple-dev-containers).
 
 ## Install
 
