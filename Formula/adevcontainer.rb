@@ -4,9 +4,9 @@
 class Adevcontainer < Formula
   desc "Native Swift CLI for devcontainer.json on Apple container"
   homepage "https://github.com/wcgomes/apple-devcontainers"
-  version "0.5.1"
+  version "0.6.0"
   url "https://github.com/wcgomes/apple-devcontainers/releases/download/v#{version}/adevcontainer-macos-arm64.tar.gz"
-  sha256 "db25b6fe20cada40ea519f3c8cae3e8c4fd87195c656431259b019cf8f12918d"
+  sha256 "42d615edf6f1f010703bfe706e506bae9b2476e1792a4c51b3a5cbfc614064bf"
   license "MIT"
 
   depends_on macos: :tahoe # macOS 26+
