@@ -4,9 +4,9 @@
 class Adevcontainer < Formula
   desc "Native Swift CLI for devcontainer.json on Apple container"
   homepage "https://github.com/wcgomes/apple-devcontainers"
-  version "0.8.0"
+  version "0.8.1"
   url "https://github.com/wcgomes/apple-devcontainers/releases/download/v#{version}/adevcontainer-macos-arm64.tar.gz"
-  sha256 "5b0986648d27268e7e2fe5beb39034f2b3fce68156f74b2ba5fff464c48bf9cb"
+  sha256 "718105a5b4f3dd01a9dd93aa72f6d3a1308a294174d14a63e965ed4d3e597009"
   license "MIT"
 
   depends_on macos: :tahoe # macOS 26+
@@ -45,7 +45,7 @@ class Adevcontainer < Formula
         brew reinstall wcgomes/tap/adevcontainer
 
       If post_install cannot write /usr/local/libexec, restage with:
-        sudo adevcontainer doctor --repair
+        sudo adevcontainer install-plugin
 
       After install, run:
         adevcontainer doctor
