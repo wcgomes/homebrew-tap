@@ -4,9 +4,9 @@
 class Adevcontainer < Formula
   desc "Native Swift CLI for devcontainer.json on Apple container"
   homepage "https://github.com/wcgomes/apple-devcontainers"
-  version "0.7.2"
+  version "0.8.0"
   url "https://github.com/wcgomes/apple-devcontainers/releases/download/v#{version}/adevcontainer-macos-arm64.tar.gz"
-  sha256 "55d1b933fb16dc0c71c8f8beaf5ab92b93285dca972a57f83ef186f182836a44"
+  sha256 "5b0986648d27268e7e2fe5beb39034f2b3fce68156f74b2ba5fff464c48bf9cb"
   license "MIT"
 
   depends_on macos: :tahoe # macOS 26+
@@ -14,6 +14,21 @@ class Adevcontainer < Formula
 
   def install
     bin.install "adevcontainer"
+  end
+
+  def post_install
+    container_path = "/usr/local/bin/container"
+    container_path = which("container").to_s unless File.executable?(container_path)
+    odie "Apple container CLI not found at /usr/local/bin/container or on PATH" if container_path.to_s.empty?
+    install_root = File.dirname(File.dirname(container_path))
+    plugin_root = File.join(install_root, "libexec", "container-plugins", "dev")
+    plugin_bin = File.join(plugin_root, "bin")
+    mkdir_p plugin_bin
+    cp bin/"adevcontainer", File.join(plugin_bin, "dev")
+    chmod 0755, File.join(plugin_bin, "dev")
+    File.write(File.join(plugin_root, "config.toml"), <<~TOML)
+      abstract = "Native Swift CLI for devcontainer.json on Apple container"
+    TOML
   end
 
   test do
@@ -24,6 +39,13 @@ class Adevcontainer < Formula
     <<~EOS
       adevcontainer requires the Apple container CLI on the host (not installed by this formula):
         https://github.com/apple/container
+
+      After upgrading Apple container, reinstall this formula so the
+      `container dev` plugin is restaged:
+        brew reinstall wcgomes/tap/adevcontainer
+
+      If post_install cannot write /usr/local/libexec, restage with:
+        sudo adevcontainer doctor --repair
 
       After install, run:
         adevcontainer doctor
